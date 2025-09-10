@@ -1,0 +1,46 @@
+classDiagram
+    class User {
+      - String username
+      - String fullName
+      - String email
+    }
+
+    class Event {
+      - int id
+      - String name
+      - String address
+      - EventCategory category
+      - LocalDateTime dateTime
+      - String description
+      - List<User> participants
+      + addParticipant(User)
+      + removeParticipant(User)
+    }
+
+    class EventCategory {
+      <<enum>>
+      FESTA
+      SHOW
+      ESPORTE
+      TEATRO
+    }
+
+    class EventRepository {
+      - String fileName
+      + saveEvents(List<Event>)
+      + loadEvents(): List<Event>
+    }
+
+    class Main {
+      - User currentUser
+      - List<Event> events
+      + main(String[])
+      + menu()
+    }
+
+    User "1" --> "N" Event : participa
+    Event "N" --> "1" EventCategory
+    EventRepository "1" --> "N" Event
+    Main --> User
+    Main --> Event
+    Main --> EventRepository
